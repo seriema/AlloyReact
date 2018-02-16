@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 import Clock from "./Clock";
+import editable from './editable';
 
-export default class ReactBlock extends React.Component {
-
+class ReactBlock extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            number: props.someNumber,
+            number: props.number,
             firstRender: new Date()
         };
     }
@@ -15,30 +15,11 @@ export default class ReactBlock extends React.Component {
     render() {
         return (
             <div>
-                This React component was rendered at <strong>{this.state.firstRender.toLocaleTimeString("sv-SE")}</strong> with a number of <strong>{this.props.someNumber}</strong>.<br/><br/>
-                The current value of the <strong>{this.props.propertyName}</strong> property is <strong>{this.state.number}</strong>, and the current time is: <strong><Clock /></strong>
+                This React component was rendered at <strong>{this.state.firstRender.toLocaleTimeString("sv-SE")}</strong> with a number of <strong>{this.state.number}</strong>.<br/><br/>
+                The current value of the <strong>{this.props.propertyName}</strong> property is <strong>{this.props.number}</strong>, and the current time is: <strong><Clock /></strong>
             </div>
         );
     }
-
-    componentDidMount() {
-
-        if (document.getElementsByTagName("HTML")[0].dataset.editMode === 'True') { // We are in edit mode
-
-            window.addEventListener('load', function () { // Ensure the 'epi' object has been initialized
-
-                var epi = window.epi;
-
-                epi.subscribe("beta/contentSaved", function (propertyDetails) {
-
-                    // Check if it was "our" property that changed
-                    if (this.props.propertyName.toUpperCase() === propertyDetails.properties[0].name.toUpperCase()) {
-                        this.setState({ number: propertyDetails.properties[0].value }); // Update this component's state to reflect the new property value in the UI
-                    }
-                }.bind(this));
-
-
-            }.bind(this));
-        }
-    }
 }
+
+export default editable(ReactBlock, 'number');

@@ -1,7 +1,8 @@
 @using AlloyTemplates.Models.Blocks
 @model ThreeKeyFactsBlock
 
-@Html.ReactComponent(
+@Html.ReactComponentFor(
+    ViewData.ModelMetadata.PropertyName,
     "ThreeKeyFacts", /* The React component to mount */
     new /* Object to pass as props to the React component */
     {

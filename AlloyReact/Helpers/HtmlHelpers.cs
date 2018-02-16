@@ -57,9 +57,7 @@ namespace AlloyReact.Helpers
             ClientResources.RequireScript("", "ReactComponent", new[] { "react" });
 
             // Render container element for the React component (for more attributes, see http://world.episerver.com/documentation/developer-guides/CMS/editing/)
-            return PageEditing.PageIsInEditMode ?
-                    new MvcHtmlString($"<div data-epi-property-name=\"{propertyName}\" data-epi-property-render=\"none\" data-react-component=\"{component}\" data-props='{propsJson ?? "{ }"}'></div>") :
-                    html.ReactComponent(component, props);
+            return new MvcHtmlString($"<div data-epi-property-name=\"{propertyName}\" data-epi-property-render=\"none\" data-react-component=\"{component}\" data-props='{propsJson ?? "{ }"}'></div>");
         }
 
         /// <summary>
